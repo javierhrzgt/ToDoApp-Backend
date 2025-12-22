@@ -142,3 +142,8 @@ dist
 .svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/node
+/src/generated/prisma
+
+# Docker volumes (si usas bind mounts)
+postgres-data/
+pgadmin-data/
