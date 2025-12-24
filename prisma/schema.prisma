@@ -12,6 +12,16 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  id          Int       @id @default(autoincrement())
+  username    String    @unique
+  password    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  tasks       Task[]
+  @@index([username])
+}
+
 model Task {
   id          Int      @id @default(autoincrement())
   title       String
@@ -19,4 +29,10 @@ model Task {
   completed   Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  userId      Int
+  user        User @relation(fields: [userId],references: [id],onDelete: Cascade)
+
+  @@index([userId])
+  @@index([completed])
+  @@index([createdAt(sort: Desc)])
 }
