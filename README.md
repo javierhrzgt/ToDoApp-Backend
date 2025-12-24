@@ -45,16 +45,16 @@ pnpm dev
 ## API Endpoints
 
 ### Health Checks
-GET /health       # Status básico
-GET /health/ready # Status + DB check
+- GET /health       # Status básico
+- GET /health/ready # Status + DB check
 
 ### Tasks API v1
-GET    /api/v1/tasks     # Listar tareas
-GET    /api/v1/tasks/:id # Obtener por ID
-POST   /api/v1/tasks     # Crear tarea
-PUT    /api/v1/tasks/:id # Actualizar completo
-PATCH  /api/v1/tasks/:id # Actualizar parcial
-DELETE /api/v1/tasks/:id # Eliminar
+- GET    /api/v1/tasks     # Listar tareas
+- GET    /api/v1/tasks/:id # Obtener por ID
+- POST   /api/v1/tasks     # Crear tarea
+- PUT    /api/v1/tasks/:id # Actualizar completo
+- PATCH  /api/v1/tasks/:id # Actualizar parcial
+- DELETE /api/v1/tasks/:id # Eliminar
 
 # Crear tarea
 curl -X POST http://localhost:3000/api/v1/tasks \
