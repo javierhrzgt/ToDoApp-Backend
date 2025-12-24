@@ -1,55 +1,61 @@
-import { Request, Response, RequestHandler } from "express";
+import type { Request, Response, RequestHandler } from "express";
 import { taskService } from "@/services/task.service";
 import { StatusCodes } from "http-status-codes";
-import { asyncHandler, AppError } from "@/middleware";
+import { asyncHandler } from "@/middleware";
+import type { CreateTaskInput, UpdateTaskInput } from "@/types/task.types";
 
 export const taskController = {
   // GET /tasks
-  getAll: asyncHandler(async (req: Request, res: Response) => {
-    const tasks = await taskService.findAll();
-    res.json({ success: true, data: tasks });
+  getAll: asyncHandler(async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!.userId;
+    const tasks = await taskService.findAll(userId);
+
+    res.status(StatusCodes.OK).json({ success: true, data: tasks });
   }) as RequestHandler,
 
   // GET /tasks/:id
-  getById: asyncHandler(async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id);
-    const task = await taskService.findById(id);
+  getById: asyncHandler(async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!.userId;
+    const id = parseInt(req.params.id, 10);
+    const task = await taskService.findById(id, userId);
 
-    if (!task) {
-      throw AppError.notFound("Task");
-    }
-    res.json({ success: true, data: task });
-  })  as RequestHandler,
+    res.status(StatusCodes.OK).json({
+      success: true,
+      data: task,
+    });
+  }) as RequestHandler,
 
   // POST /tasks
-  create: asyncHandler(async (req: Request, res: Response) => {
-    const task = await taskService.create(req.body);
-    res.status(StatusCodes.CREATED).json({ success: true, data: task });
-  })  as RequestHandler,
+  create: asyncHandler(
+    async (
+      req: Request,
+      res: Response
+    ): Promise<void> => {
+      const userId = req.user!.userId;
+      const task = await taskService.create(req.body, userId);
+
+      res.status(StatusCodes.CREATED).json({ success: true, data: task });
+    }
+  ) as RequestHandler,
 
   // PUT /task/:id
-  update: asyncHandler(async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id);
-    const task = await taskService.findById(id);
+  update: asyncHandler(async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!.userId;
+    const id = parseInt(req.params.id, 10);
+    const task = await taskService.update(id, req.body, userId);
 
-    if (!task) {
-      throw AppError.notFound("Task");
-    }
-
-    const updatedTask = await taskService.update(id, req.body);
-    res.json({ success: true, data: updatedTask });
+    res.status(StatusCodes.OK).json({
+      success: true,
+      data: task,
+    });
   }) as RequestHandler,
 
   // DELETE /task/:id
-  delete: asyncHandler(async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id);
-    const task = await taskService.findById(id);
+  delete: asyncHandler(async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!.userId;
+    const id = parseInt(req.params.id, 10);
+    await taskService.delete(id, userId);
 
-    if (!task) {
-      throw AppError.notFound("Task");
-    }
-
-    await taskService.delete(id);
     res.status(StatusCodes.NO_CONTENT).send();
   }) as RequestHandler,
 };

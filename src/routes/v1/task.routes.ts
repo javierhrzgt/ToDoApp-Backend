@@ -1,6 +1,7 @@
-import { Router, type IRouter } from "express";
+import { Router } from "express";
+import type { IRouter } from "express";
 import { taskController } from "@/controllers/task.controller";
-import { validate } from "@/middleware";
+import { validate, authenticate } from "@/middleware";
 import {
   createTaskSchema,
   updateTaskSchema,
@@ -8,6 +9,8 @@ import {
 } from "@/schemas/task.schema";
 
 const router: IRouter = Router();
+
+router.use(authenticate);
 
 router.get("/", taskController.getAll);
 router.get("/:id", validate(taskIdParamSchema), taskController.getById);

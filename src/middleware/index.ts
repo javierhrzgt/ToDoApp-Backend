@@ -5,3 +5,4 @@ export { notFoundHandler } from "@/middleware/notFoundHandler";
 export { validate } from "@/middleware/validate";
 export { requestIdMiddleware } from "@/middleware/requestId";
 export { httpLogger } from "@/middleware/httpLogger";
+export { authenticate, optionalAuthenticate } from "@/middleware/auth";
