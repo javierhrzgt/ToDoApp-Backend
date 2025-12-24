@@ -1,13 +1,19 @@
 import { Router, type IRouter } from "express";
 import { taskController } from "@/controllers/task.controller";
+import { validate } from "@/middleware";
+import {
+  createTaskSchema,
+  updateTaskSchema,
+  taskIdParamSchema,
+} from "@/schemas/task.schema";
 
 const router: IRouter = Router();
 
 router.get("/", taskController.getAll);
-router.get("/:id", taskController.getById);
-router.post("/", taskController.create);
-router.put("/:id", taskController.update);
-router.patch("/:id", taskController.update);
-router.delete("/:id", taskController.delete);
+router.get("/:id", validate(taskIdParamSchema), taskController.getById);
+router.post("/", validate(createTaskSchema), taskController.create);
+router.put("/:id", validate(updateTaskSchema), taskController.update);
+router.patch("/:id", validate(updateTaskSchema), taskController.update);
+router.delete("/:id", validate(taskIdParamSchema), taskController.delete);
 
 export default router;

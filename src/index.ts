@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { prisma } from "@/lib/prisma";
 import routes from "@/routes";
+import { errorHandler, notFoundHandler } from "@/middleware";
 
 dotenv.config();
 
@@ -17,6 +18,9 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/api", routes);
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
