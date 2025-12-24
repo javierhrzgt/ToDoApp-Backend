@@ -14,54 +14,65 @@ API REST para gestión de tareas con Express, Prisma y TypeScript.
 
 ## Instalación
 
-### Clonar repositorio
+```bash
+# Clonar repositorio
 git clone <repo-url>
 cd todoapp
 
-### Instalar dependencias
+# Instalar dependencias
 pnpm install
 
-### Configurar variables de entorno
+# Configurar variables de entorno
 cp .env.example .env
 
-### Iniciar base de datos
+# Iniciar base de datos
 docker compose up -d
 
-### Ejecutar migraciones
+# Ejecutar migraciones
 pnpm prisma migrate dev
 
-### Iniciar servidor
+# Iniciar servidor
 pnpm dev
+```
 
 ## Scripts
 
 | Comando | Descripción |
 |---------|-------------|
-| pnpm dev | Servidor en modo desarrollo |
-| pnpm build | Compilar TypeScript |
-| pnpm start | Servidor en producción |
-| pnpm prisma studio | GUI de base de datos |
+| `pnpm dev` | Servidor en modo desarrollo |
+| `pnpm build` | Compilar TypeScript |
+| `pnpm start` | Servidor en producción |
+| `pnpm prisma studio` | GUI de base de datos |
 
 ## API Endpoints
 
 ### Health Checks
-- GET /health       # Status básico
-- GET /health/ready # Status + DB check
+
+```bash
+GET /health       # Status básico
+GET /health/ready # Status + DB check
+```
 
 ### Tasks API v1
-- GET    /api/v1/tasks     # Listar tareas
-- GET    /api/v1/tasks/:id # Obtener por ID
-- POST   /api/v1/tasks     # Crear tarea
-- PUT    /api/v1/tasks/:id # Actualizar completo
-- PATCH  /api/v1/tasks/:id # Actualizar parcial
-- DELETE /api/v1/tasks/:id # Eliminar
 
+```bash
+GET    /api/v1/tasks     # Listar tareas
+GET    /api/v1/tasks/:id # Obtener por ID
+POST   /api/v1/tasks     # Crear tarea
+PUT    /api/v1/tasks/:id # Actualizar completo
+PATCH  /api/v1/tasks/:id # Actualizar parcial
+DELETE /api/v1/tasks/:id # Eliminar
+```
+
+## Ejemplo de uso
+
+```bash
 # Crear tarea
 curl -X POST http://localhost:3000/api/v1/tasks \
   -H "Content-Type: application/json" \
   -d '{"title": "Mi tarea", "description": "Descripción"}'
 
-# Response esperado
+# Response
 {
   "success": true,
   "data": {
@@ -73,9 +84,11 @@ curl -X POST http://localhost:3000/api/v1/tasks \
     "updatedAt": "2024-12-22T10:00:00.000Z"
   }
 }
+```
 
 ## Estructura
 
+```
 src/
 ├── controllers/  # HTTP handlers
 ├── middleware/   # Express middleware
@@ -85,6 +98,7 @@ src/
 ├── types/        # TypeScript types
 ├── lib/          # Utilities
 └── index.ts      # Entry point
+```
 
 ## Licencia
 
