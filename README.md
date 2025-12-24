@@ -14,23 +14,23 @@ API REST para gestión de tareas con Express, Prisma y TypeScript.
 
 ## Instalación
 
-# Clonar repositorio
+### Clonar repositorio
 git clone <repo-url>
 cd todoapp
 
-# Instalar dependencias
+### Instalar dependencias
 pnpm install
 
-# Configurar variables de entorno
+### Configurar variables de entorno
 cp .env.example .env
 
-# Iniciar base de datos
+### Iniciar base de datos
 docker compose up -d
 
-# Ejecutar migraciones
+### Ejecutar migraciones
 pnpm prisma migrate dev
 
-# Iniciar servidor
+### Iniciar servidor
 pnpm dev
 
 ## Scripts
