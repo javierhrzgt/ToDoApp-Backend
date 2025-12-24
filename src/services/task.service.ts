@@ -19,7 +19,7 @@ export const taskService = {
     });
 
     if (!task) {
-      throw AppError.notFound("Task not found");
+      throw AppError.notFound("Task");
     }
     return task;
   },

@@ -81,7 +81,7 @@ export const userService = {
     });
 
     if (!user) {
-      throw AppError.notFound("User not found");
+      throw AppError.notFound("User");
     }
 
     return excludePassword(user);
